@@ -1,0 +1,73 @@
+{
+  "name": "customer-onboarding-multi-step-form-application",
+  "description": "Customer Onboarding Multi-Step Form Application — Generate runnable production ready code for the uploaded user stories",
+  "type": "frontend",
+  "stack": {
+    "language": "typescript",
+    "frontend": {
+      "framework": "react",
+      "styling": "tailwind",
+      "stateManagement": "zustand"
+    },
+    "runtime": "node"
+  },
+  "features": [
+    {
+      "name": "Personal Information",
+      "type": "custom",
+      "entities": [
+        "Customer",
+        "PersonalInfo",
+        "ContactDetails",
+        "ResidencyInfo",
+        "MilitaryServiceInfo",
+        "UploadedDocument"
+      ],
+      "description": "Personal Information: firstName [Required, alphabetic characters only], lastName [Required, alphabetic characters only], dateOfBirth (date) [Required, must be 18 years or older], nationality (dropdown) [Required]"
+    },
+    {
+      "name": "Contact Details",
+      "type": "custom",
+      "entities": [
+        "Customer",
+        "PersonalInfo",
+        "ContactDetails",
+        "ResidencyInfo",
+        "MilitaryServiceInfo",
+        "UploadedDocument"
+      ],
+      "description": "Contact Details: email (email) [Required, must be valid email format], phone (phone) [Required, must be valid UK phone number], addressLine1 [Required], addressLine2, city [Required], postcode [Required, valid UK postcode format]"
+    },
+    {
+      "name": "Residency Information",
+      "type": "custom",
+      "entities": [
+        "Customer",
+        "PersonalInfo",
+        "ContactDetails",
+        "ResidencyInfo",
+        "MilitaryServiceInfo",
+        "UploadedDocument"
+      ],
+      "description": "Residency Information: ukResident (radio) [Required], visaType (dropdown) [Required if non-UK resident] {Show only if ukResident = No}, visaExpiryDate (date) [Required if non-UK resident, must be future date] {Show only if ukResident = No}, proofOfResidency (file) [Required, PDF/JPG/PNG only, max 5MB]"
+    },
+    {
+      "name": "Military Service Information",
+      "type": "custom",
+      "entities": [
+        "Customer",
+        "PersonalInfo",
+        "ContactDetails",
+        "ResidencyInfo",
+        "MilitaryServiceInfo",
+        "UploadedDocument"
+      ],
+      "description": "Military Service Information: servedInMilitary (radio) [Required], branch (dropdown) [Required if served in military] {Show only if servedInMilitary = Yes}, serviceStartDate (date) [Required if served in military] {Show only if servedInMilitary = Yes}, serviceEndDate (date) [Required if served in military, must be after start date] {Show only if servedInMilitary = Yes}, dischargeDocument (file) [Optional, PDF/JPG/PNG only, max 5MB] {Show only if servedInMilitary = Yes}"
+    }
+  ],
+  "architecture": "monolith",
+  "testing": false,
+  "documentation": false,
+  "docker": false,
+  "cicd": false
+}
