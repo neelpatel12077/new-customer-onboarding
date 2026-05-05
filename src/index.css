@@ -7,67 +7,50 @@
     @apply box-border;
   }
 
+  html {
+    @apply h-full;
+  }
+
   body {
-    @apply m-0 p-0 font-sans antialiased;
-    @apply bg-gray-50 text-gray-900;
+    @apply h-full m-0 font-sans antialiased text-gray-900 bg-gray-50;
   }
 
   #root {
-    @apply min-h-screen;
+    @apply h-full;
   }
 }
 
 @layer components {
-  .form-label {
-    @apply block text-sm font-medium text-gray-700 mb-1 uppercase tracking-wide;
-  }
-
   .form-input {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-lg;
-    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
-    @apply transition-all duration-200;
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all duration-200;
   }
 
   .form-input-error {
     @apply border-red-500 focus:ring-red-500;
   }
 
-  .form-error-message {
-    @apply text-red-600 text-sm mt-1;
+  .form-label {
+    @apply block text-sm font-medium text-gray-700 mb-1 tracking-wide uppercase;
   }
 
-  .form-select {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-lg;
-    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
-    @apply bg-white transition-all duration-200;
-  }
-
-  .form-select-error {
-    @apply border-red-500 focus:ring-red-500;
-  }
-
-  .form-checkbox {
-    @apply w-4 h-4 text-blue-600 border-gray-300 rounded;
-    @apply focus:ring-2 focus:ring-blue-500;
+  .form-error {
+    @apply text-sm text-red-600 mt-1;
   }
 
   .btn {
-    @apply px-6 py-3 rounded-lg font-medium transition-all duration-200;
-    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply px-6 py-2.5 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .btn-primary {
-    @apply bg-blue-600 text-white hover:bg-blue-700;
-    @apply focus:ring-blue-500;
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
   }
 
   .btn-secondary {
-    @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
-    @apply focus:ring-gray-500;
+    @apply bg-gray-200 text-gray-700 hover:bg-gray-300 focus:ring-gray-500;
   }
 
-  .btn-disabled {
-    @apply opacity-50 cursor-not-allowed;
+  .btn-outline {
+    @apply border-2 border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50 focus:ring-gray-500;
   }
 
   .card {
@@ -75,28 +58,23 @@
   }
 
   .step-indicator-item {
-    @apply flex items-center;
+    @apply flex items-center justify-center w-10 h-10 rounded-full border-2 font-semibold transition-all duration-200;
   }
 
-  .step-indicator-circle {
-    @apply w-10 h-10 rounded-full flex items-center justify-center;
-    @apply font-semibold text-sm transition-all duration-200;
+  .step-indicator-item-active {
+    @apply bg-blue-600 border-blue-600 text-white;
   }
 
-  .step-indicator-circle-active {
-    @apply bg-blue-600 text-white;
+  .step-indicator-item-completed {
+    @apply bg-green-600 border-green-600 text-white;
   }
 
-  .step-indicator-circle-completed {
-    @apply bg-green-600 text-white;
-  }
-
-  .step-indicator-circle-inactive {
-    @apply bg-gray-200 text-gray-600;
+  .step-indicator-item-inactive {
+    @apply bg-white border-gray-300 text-gray-400;
   }
 
   .step-indicator-line {
-    @apply flex-1 h-1 mx-2 transition-all duration-200;
+    @apply flex-1 h-0.5 mx-2 transition-all duration-200;
   }
 
   .step-indicator-line-completed {
@@ -104,6 +82,12 @@
   }
 
   .step-indicator-line-inactive {
-    @apply bg-gray-200;
+    @apply bg-gray-300;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }

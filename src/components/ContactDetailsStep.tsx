@@ -2,20 +2,18 @@ import React from 'react';
 
 interface ContactDetailsStepProps {
   data: {
-    email: string;
-    phone: string;
-    addressLine1: string;
-    addressLine2: string;
-    city: string;
-    postcode: string;
+    email?: string;
+    confirmEmail?: string;
+    mobilePhone?: string;
+    homePhone?: string;
+    preferredContactMethod?: string;
   };
   errors: {
     email?: string;
-    phone?: string;
-    addressLine1?: string;
-    addressLine2?: string;
-    city?: string;
-    postcode?: string;
+    confirmEmail?: string;
+    mobilePhone?: string;
+    homePhone?: string;
+    preferredContactMethod?: string;
   };
   onChange: (field: string, value: string) => void;
 }
@@ -25,45 +23,57 @@ const ContactDetailsStep: React.FC<ContactDetailsStepProps> = ({
   errors,
   onChange,
 }) => {
-  const handleInputChange = (field: string, value: string) => {
-    onChange(field, value);
+  const contactMethods = [
+    { value: 'email', label: 'Email' },
+    { value: 'mobile', label: 'Mobile Phone' },
+    { value: 'home', label: 'Home Phone' },
+  ];
+
+  const formatPhoneNumber = (value: string): string => {
+    const cleaned = value.replace(/\D/g, '');
+    return cleaned;
+  };
+
+  const handlePhoneChange = (field: string, value: string) => {
+    const formatted = formatPhoneNumber(value);
+    onChange(field, formatted);
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg shadow-lg p-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-slate-800 mb-2">
-            Contact Details
-          </h2>
-          <p className="text-slate-600">
-            Please provide your contact information and address
-          </p>
-        </div>
+    <div className="w-full max-w-3xl mx-auto space-y-8">
+      <div className="space-y-2">
+        <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
+          Contact Details
+        </h2>
+        <p className="text-slate-600 text-lg">
+          Please provide your contact information so we can reach you
+        </p>
+      </div>
 
+      <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-8 space-y-6">
         <div className="space-y-6">
-          {/* Email */}
-          <div>
+          <div className="space-y-2">
             <label
               htmlFor="email"
-              className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2"
+              className="block text-xs font-semibold text-slate-700 uppercase tracking-wider"
             >
               Email Address <span className="text-red-500">*</span>
             </label>
             <input
               type="email"
               id="email"
-              value={data.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
-              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
+              value={data.email || ''}
+              onChange={(e) => onChange('email', e.target.value)}
+              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                 errors.email
-                  ? 'border-red-500 focus:border-red-600 focus:ring-4 focus:ring-red-100'
-                  : 'border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
-              } outline-none text-slate-800 placeholder-slate-400`}
+                  ? 'border-red-300 focus:border-red-500 focus:ring-red-500 bg-red-50'
+                  : 'border-slate-300 focus:border-blue-500 focus:ring-blue-500 bg-white'
+              } text-slate-900 placeholder-slate-400`}
               placeholder="your.email@example.com"
+              autoComplete="email"
             />
             {errors.email && (
-              <p className="mt-2 text-sm text-red-600 flex items-center">
+              <p className="text-sm text-red-600 font-medium mt-1 flex items-center">
                 <svg
                   className="w-4 h-4 mr-1"
                   fill="currentColor"
@@ -80,28 +90,28 @@ const ContactDetailsStep: React.FC<ContactDetailsStepProps> = ({
             )}
           </div>
 
-          {/* Phone */}
-          <div>
+          <div className="space-y-2">
             <label
-              htmlFor="phone"
-              className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2"
+              htmlFor="confirmEmail"
+              className="block text-xs font-semibold text-slate-700 uppercase tracking-wider"
             >
-              Phone Number <span className="text-red-500">*</span>
+              Confirm Email Address <span className="text-red-500">*</span>
             </label>
             <input
-              type="tel"
-              id="phone"
-              value={data.phone}
-              onChange={(e) => handleInputChange('phone', e.target.value)}
-              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
-                errors.phone
-                  ? 'border-red-500 focus:border-red-600 focus:ring-4 focus:ring-red-100'
-                  : 'border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
-              } outline-none text-slate-800 placeholder-slate-400`}
-              placeholder="07123 456789 or +44 7123 456789"
+              type="email"
+              id="confirmEmail"
+              value={data.confirmEmail || ''}
+              onChange={(e) => onChange('confirmEmail', e.target.value)}
+              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                errors.confirmEmail
+                  ? 'border-red-300 focus:border-red-500 focus:ring-red-500 bg-red-50'
+                  : 'border-slate-300 focus:border-blue-500 focus:ring-blue-500 bg-white'
+              } text-slate-900 placeholder-slate-400`}
+              placeholder="Confirm your email address"
+              autoComplete="email"
             />
-            {errors.phone && (
-              <p className="mt-2 text-sm text-red-600 flex items-center">
+            {errors.confirmEmail && (
+              <p className="text-sm text-red-600 font-medium mt-1 flex items-center">
                 <svg
                   className="w-4 h-4 mr-1"
                   fill="currentColor"
@@ -113,114 +123,34 @@ const ContactDetailsStep: React.FC<ContactDetailsStepProps> = ({
                     clipRule="evenodd"
                   />
                 </svg>
-                {errors.phone}
-              </p>
-            )}
-            <p className="mt-1 text-xs text-slate-500">
-              UK phone number format required
-            </p>
-          </div>
-
-          {/* Address Line 1 */}
-          <div>
-            <label
-              htmlFor="addressLine1"
-              className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2"
-            >
-              Address Line 1 <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              id="addressLine1"
-              value={data.addressLine1}
-              onChange={(e) => handleInputChange('addressLine1', e.target.value)}
-              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
-                errors.addressLine1
-                  ? 'border-red-500 focus:border-red-600 focus:ring-4 focus:ring-red-100'
-                  : 'border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
-              } outline-none text-slate-800 placeholder-slate-400`}
-              placeholder="Street address, P.O. box, company name"
-            />
-            {errors.addressLine1 && (
-              <p className="mt-2 text-sm text-red-600 flex items-center">
-                <svg
-                  className="w-4 h-4 mr-1"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                {errors.addressLine1}
+                {errors.confirmEmail}
               </p>
             )}
           </div>
 
-          {/* Address Line 2 */}
-          <div>
-            <label
-              htmlFor="addressLine2"
-              className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2"
-            >
-              Address Line 2
-            </label>
-            <input
-              type="text"
-              id="addressLine2"
-              value={data.addressLine2}
-              onChange={(e) => handleInputChange('addressLine2', e.target.value)}
-              className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
-                errors.addressLine2
-                  ? 'border-red-500 focus:border-red-600 focus:ring-4 focus:ring-red-100'
-                  : 'border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
-              } outline-none text-slate-800 placeholder-slate-400`}
-              placeholder="Apartment, suite, unit, building, floor, etc. (optional)"
-            />
-            {errors.addressLine2 && (
-              <p className="mt-2 text-sm text-red-600 flex items-center">
-                <svg
-                  className="w-4 h-4 mr-1"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                {errors.addressLine2}
-              </p>
-            )}
-          </div>
-
-          {/* City and Postcode Row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* City */}
-            <div>
+            <div className="space-y-2">
               <label
-                htmlFor="city"
-                className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2"
+                htmlFor="mobilePhone"
+                className="block text-xs font-semibold text-slate-700 uppercase tracking-wider"
               >
-                City <span className="text-red-500">*</span>
+                Mobile Phone <span className="text-red-500">*</span>
               </label>
               <input
-                type="text"
-                id="city"
-                value={data.city}
-                onChange={(e) => handleInputChange('city', e.target.value)}
-                className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
-                  errors.city
-                    ? 'border-red-500 focus:border-red-600 focus:ring-4 focus:ring-red-100'
-                    : 'border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
-                } outline-none text-slate-800 placeholder-slate-400`}
-                placeholder="London"
+                type="tel"
+                id="mobilePhone"
+                value={data.mobilePhone || ''}
+                onChange={(e) => handlePhoneChange('mobilePhone', e.target.value)}
+                className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                  errors.mobilePhone
+                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500 bg-red-50'
+                    : 'border-slate-300 focus:border-blue-500 focus:ring-blue-500 bg-white'
+                } text-slate-900 placeholder-slate-400`}
+                placeholder="07123456789"
+                autoComplete="tel"
               />
-              {errors.city && (
-                <p className="mt-2 text-sm text-red-600 flex items-center">
+              {errors.mobilePhone && (
+                <p className="text-sm text-red-600 font-medium mt-1 flex items-center">
                   <svg
                     className="w-4 h-4 mr-1"
                     fill="currentColor"
@@ -232,73 +162,123 @@ const ContactDetailsStep: React.FC<ContactDetailsStepProps> = ({
                       clipRule="evenodd"
                     />
                   </svg>
-                  {errors.city}
+                  {errors.mobilePhone}
                 </p>
               )}
-            </div>
-
-            {/* Postcode */}
-            <div>
-              <label
-                htmlFor="postcode"
-                className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-2"
-              >
-                Postcode <span className="text-red-500">*</span>
-              </label>
-              <input
-                type="text"
-                id="postcode"
-                value={data.postcode}
-                onChange={(e) => handleInputChange('postcode', e.target.value.toUpperCase())}
-                className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
-                  errors.postcode
-                    ? 'border-red-500 focus:border-red-600 focus:ring-4 focus:ring-red-100'
-                    : 'border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100'
-                } outline-none text-slate-800 placeholder-slate-400 uppercase`}
-                placeholder="SW1A 1AA"
-                maxLength={8}
-              />
-              {errors.postcode && (
-                <p className="mt-2 text-sm text-red-600 flex items-center">
-                  <svg
-                    className="w-4 h-4 mr-1"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  {errors.postcode}
-                </p>
-              )}
-              <p className="mt-1 text-xs text-slate-500">
-                Valid UK postcode format required
+              <p className="text-xs text-slate-500 mt-1">
+                UK mobile number (e.g., 07123456789)
               </p>
             </div>
+
+            <div className="space-y-2">
+              <label
+                htmlFor="homePhone"
+                className="block text-xs font-semibold text-slate-700 uppercase tracking-wider"
+              >
+                Home Phone
+              </label>
+              <input
+                type="tel"
+                id="homePhone"
+                value={data.homePhone || ''}
+                onChange={(e) => handlePhoneChange('homePhone', e.target.value)}
+                className={`w-full px-4 py-3 rounded-lg border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                  errors.homePhone
+                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500 bg-red-50'
+                    : 'border-slate-300 focus:border-blue-500 focus:ring-blue-500 bg-white'
+                } text-slate-900 placeholder-slate-400`}
+                placeholder="01234567890"
+                autoComplete="tel"
+              />
+              {errors.homePhone && (
+                <p className="text-sm text-red-600 font-medium mt-1 flex items-center">
+                  <svg
+                    className="w-4 h-4 mr-1"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  {errors.homePhone}
+                </p>
+              )}
+              <p className="text-xs text-slate-500 mt-1">
+                Optional - UK landline number
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-3 pt-2">
+            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
+              Preferred Contact Method <span className="text-red-500">*</span>
+            </label>
+            <div className="space-y-3">
+              {contactMethods.map((method) => (
+                <label
+                  key={method.value}
+                  className={`flex items-center p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 ${
+                    data.preferredContactMethod === method.value
+                      ? 'border-blue-500 bg-blue-50 shadow-md'
+                      : 'border-slate-300 bg-white hover:border-slate-400 hover:shadow-sm'
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    name="preferredContactMethod"
+                    value={method.value}
+                    checked={data.preferredContactMethod === method.value}
+                    onChange={(e) => onChange('preferredContactMethod', e.target.value)}
+                    className="w-5 h-5 text-blue-600 border-slate-300 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  />
+                  <span className="ml-3 text-slate-900 font-medium">
+                    {method.label}
+                  </span>
+                </label>
+              ))}
+            </div>
+            {errors.preferredContactMethod && (
+              <p className="text-sm text-red-600 font-medium mt-2 flex items-center">
+                <svg
+                  className="w-4 h-4 mr-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                {errors.preferredContactMethod}
+              </p>
+            )}
           </div>
         </div>
+      </div>
 
-        <div className="mt-8 pt-6 border-t border-slate-200">
-          <div className="flex items-start space-x-3 text-sm text-slate-600">
+      <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+        <div className="flex">
+          <div className="flex-shrink-0">
             <svg
-              className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+              className="h-5 w-5 text-blue-600"
+              fill="currentColor"
+              viewBox="0 0 20 20"
             >
               <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                fillRule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                clipRule="evenodd"
               />
             </svg>
-            <p>
-              Your contact details will be used for account verification and important notifications. 
-              Please ensure all information is accurate and up to date.
+          </div>
+          <div className="ml-3">
+            <p className="text-sm text-blue-800">
+              We'll use these details to keep you updated about your application and account.
+              Please ensure all information is accurate.
             </p>
           </div>
         </div>

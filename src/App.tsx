@@ -10,7 +10,7 @@ const App: React.FC = () => {
             Customer Onboarding
           </h1>
           <p className="text-lg text-gray-600">
-            Complete the multi-step form to begin your journey with us
+            Complete the multi-step form to get started
           </p>
         </div>
         <CustomerOnboardingMultiStepFormApplicationForm />

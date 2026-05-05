@@ -1,6 +1,6 @@
 {
   "name": "customer-onboarding-multi-step-form-application",
-  "description": "Customer Onboarding Multi-Step Form Application — Generate runnable production ready code for the uploaded user stories",
+  "description": "Customer Onboarding Multi-Step Form Application â€” generate runnable codebase in react for the uploaded user stories",
   "type": "frontend",
   "stack": {
     "language": "typescript",
@@ -20,10 +20,9 @@
         "PersonalInfo",
         "ContactDetails",
         "ResidencyInfo",
-        "MilitaryServiceInfo",
-        "UploadedDocument"
+        "MilitaryServiceInfo"
       ],
-      "description": "Personal Information: firstName [Required, alphabetic characters only], lastName [Required, alphabetic characters only], dateOfBirth (date) [Required, must be 18 years or older], nationality (dropdown) [Required]"
+      "description": "Personal Information: title (dropdown) [Must select a title], firstName [Required field], middleName, lastName [Required field], dateOfBirth (date) [Must be 18 years or older], nationality (dropdown) [Must select nationality], nationalInsuranceNumber [Valid UK NI number format required]"
     },
     {
       "name": "Contact Details",
@@ -33,10 +32,9 @@
         "PersonalInfo",
         "ContactDetails",
         "ResidencyInfo",
-        "MilitaryServiceInfo",
-        "UploadedDocument"
+        "MilitaryServiceInfo"
       ],
-      "description": "Contact Details: email (email) [Required, must be valid email format], phone (phone) [Required, must be valid UK phone number], addressLine1 [Required], addressLine2, city [Required], postcode [Required, valid UK postcode format]"
+      "description": "Contact Details: email (email) [Valid email address required], confirmEmail (email) [Must match email address], mobilePhone (phone) [Valid UK mobile number required], homePhone (phone) [Valid UK phone number if provided], preferredContactMethod (radio) [Must select preferred contact method]"
     },
     {
       "name": "Residency Information",
@@ -46,23 +44,21 @@
         "PersonalInfo",
         "ContactDetails",
         "ResidencyInfo",
-        "MilitaryServiceInfo",
-        "UploadedDocument"
+        "MilitaryServiceInfo"
       ],
-      "description": "Residency Information: ukResident (radio) [Required], visaType (dropdown) [Required if non-UK resident] {Show only if ukResident = No}, visaExpiryDate (date) [Required if non-UK resident, must be future date] {Show only if ukResident = No}, proofOfResidency (file) [Required, PDF/JPG/PNG only, max 5MB]"
+      "description": "Residency Information: addressLine1 [Required field], addressLine2, city [Required field], county, postcode [Valid UK postcode required], country (dropdown) [Must select country], residencyStatus (dropdown) [Must select residency status], yearsAtAddress (number) [Must be a positive number], visaType (dropdown) [Required if residency status is visa-based] {Show only if residencyStatus is 'Work Visa' or 'Student Visa'}, visaExpiryDate (date) [Required if visa type is selected, must be future date] {Show only if visaType is filled}, proofOfAddress (file) [Must upload valid document]"
     },
     {
-      "name": "Military Service Information",
+      "name": "Military Service Declaration",
       "type": "custom",
       "entities": [
         "Customer",
         "PersonalInfo",
         "ContactDetails",
         "ResidencyInfo",
-        "MilitaryServiceInfo",
-        "UploadedDocument"
+        "MilitaryServiceInfo"
       ],
-      "description": "Military Service Information: servedInMilitary (radio) [Required], branch (dropdown) [Required if served in military] {Show only if servedInMilitary = Yes}, serviceStartDate (date) [Required if served in military] {Show only if servedInMilitary = Yes}, serviceEndDate (date) [Required if served in military, must be after start date] {Show only if servedInMilitary = Yes}, dischargeDocument (file) [Optional, PDF/JPG/PNG only, max 5MB] {Show only if servedInMilitary = Yes}"
+      "description": "Military Service Declaration: servedInMilitary (radio) [Must select yes or no], branch (dropdown) [Required if served in military] {Show only if servedInMilitary is 'Yes'}, rank [Required if served in military] {Show only if servedInMilitary is 'Yes'}, serviceStartDate (date) [Required if served in military] {Show only if servedInMilitary is 'Yes'}, serviceEndDate (date) [Required if served in military, must be after start date] {Show only if servedInMilitary is 'Yes'}, dischargeType (dropdown) [Required if served in military] {Show only if servedInMilitary is 'Yes'}, veteranId {Show only if servedInMilitary is 'Yes'}"
     }
   ],
   "architecture": "monolith",
